@@ -6,11 +6,11 @@
 ##############################################################
 
 #TODO: Fill up the contents below in order to reference your assignment 3 git contents
-AESD_ASSIGNMENTS_VERSION = '#COMMIT VERSION NUMBER'
+AESD_ASSIGNMENTS_VERSION = 'master'
 # Note: Be sure to reference the *ssh* repository URL here (not https) to work properly
 # with ssh keys and the automated build/test system.
 # Your site should start with git@github.com:
-AESD_ASSIGNMENTS_SITE = '#GITHUB REPOSITORY LINK'
+AESD_ASSIGNMENTS_SITE = 'git@github.com:cu-ecen-aeld/assignment-4-beaspin.git'
 AESD_ASSIGNMENTS_SITE_METHOD = git
 AESD_ASSIGNMENTS_GIT_SUBMODULES = YES
 
@@ -22,7 +22,28 @@ endef
 define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
 	$(INSTALL) -d 0755 $(@D)/conf/ $(TARGET_DIR)/etc/finder-app/conf/
 	$(INSTALL) -m 0755 $(@D)/conf/* $(TARGET_DIR)/etc/finder-app/conf/
+        $(INSTALL) -m 0755 $(@D)/finder.sh $(TARGET_DIR)/usr/bin/
+        $(INSTALL) -m 0755 $(@D)/tester.sh $(TARGET_DIR)/usr/bin/
+        $(INSTALL) -m 0755 $(@D)/writer $(TARGET_DIR)/usr/bin/
+        $(INSTALL) -m 0755 $(@D)/finder-test.sh $(TARGET_DIR_/usr/bin/
 	$(INSTALL) -m 0755 $(@D)/assignment-autotest/test/assignment4/* $(TARGET_DIR)/bin
 endef
 
 $(eval $(generic-package))
+
+cat << EOF > base_external/Config.in
+menu "Custom External Packages"
+    source "package/aesd-assignments/Config.in"
+endmenu
+EOF
+
+cat << EOF > base_external/external.mk
+# Add external package to Buildroot
+EXTERNAL_PACKAGES := \
+    aesd-assignments
+EOF
+
+cat << EOF > base_external/external.desc
+name: project_base
+description: Custom external repository for Buildroot assignment
+EOF
