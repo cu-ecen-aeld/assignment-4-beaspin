@@ -31,19 +31,3 @@ endef
 
 $(eval $(generic-package))
 
-cat << EOF > base_external/Config.in
-menu "Custom External Packages"
-    source "package/aesd-assignments/Config.in"
-endmenu
-EOF
-
-cat << EOF > base_external/external.mk
-# Add external package to Buildroot
-EXTERNAL_PACKAGES := \
-    aesd-assignments
-EOF
-
-cat << EOF > base_external/external.desc
-name: project_base
-description: Custom external repository for Buildroot assignment
-EOF

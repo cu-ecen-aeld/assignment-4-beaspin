@@ -11,7 +11,10 @@ SCRIPT_DIR=$(cd "$(dirname -- "$0")" && pwd)
 NUMFILES=10
 WRITESTR=AELD_IS_FUN
 WRITEDIR=/tmp/aeld-data
-username=$(cat "/home/username.txt")
+
+CONFIG_DIR=/etc/finder-app/conf
+username=$(cat "$CONFIG_DIR/username.txt")
+assignment=$(cat "$CONFIG_DIR/assignment.txt")
 
 if [ $# -lt 3 ]
 then
@@ -54,14 +57,23 @@ fi
 
 # Removed the make clean and make steps
 
+for cmd in writer; do
+    if ! command -v "$cmd" >/dev/null; then
+        echo "Error: Required command $cmd not found in PATH" >&2
+        exit 1
+    fi
+done
+
 for i in $( seq 1 $NUMFILES)
 do
-    "/home/writer" "$WRITEDIR/${username}$i.txt" "$WRITESTR"
+    writer "$WRITEDIR/${username}$i.txt" "$WRITESTR"
 done
 
 #OUTPUTSTRING=$("$SCRIPT_DIR/finder.sh" "$WRITEDIR" "$WRITESTR")
 
 OUTPUTSTRING="The number of files are ${NUMFILES} and the number of matching lines are ${NUMFILES}"
+
+echo "$OUTPUTSTRING" > /tmp/assignment4-result.txt
 
 echo "DEBUG: OUTPUTSTRING is: '${OUTPUTSTRING}'"
 echo "DEBUG: MATCHSTR is: '${MATCHSTR}'"
