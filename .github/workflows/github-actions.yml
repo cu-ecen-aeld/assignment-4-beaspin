@@ -6,18 +6,22 @@ on:
         branches:
             - '*'
 jobs:
-    unit-test:
-        container: cuaesd/aesd-autotest:24-unit-test
+    full-test:
+        container: cuaesd/aesd-autotest:24-assignment4-buildroot
         runs-on: self-hosted
+        timeout-minutes: 120
         steps:
           - uses: actions/checkout@v2
-          - name: Force Git to use HTTPS for submodules
-            run: git config --global url."https://github.com/".insteadOf "git@github.com:"
-          - name: Update submodules
-            run: |
-              git submodule sync
-              git submodule update --init --recursive --remote
           - name: Checkout submodules
             run: git submodule update --init --recursive
-          - name: Run unit test
-            run: ./unit-test.sh
+          - uses: webfactory/ssh-agent@v0.5.3
+            with:
+                ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          - name: Run full test
+            env:
+              GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
+            run: ./full-test.sh
+          - name: Cleanup
+            if: always()
+            run: |
+              ssh-add -D
