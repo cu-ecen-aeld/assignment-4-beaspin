@@ -25,9 +25,11 @@ define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
         $(INSTALL) -m 0755 $(@D)/finder.sh $(TARGET_DIR)/usr/bin/
         $(INSTALL) -m 0755 $(@D)/tester.sh $(TARGET_DIR)/usr/bin/
         $(INSTALL) -m 0755 $(@D)/writer $(TARGET_DIR)/usr/bin/
-        $(INSTALL) -m 0755 $(@D)/finder-test.sh $(TARGET_DIR_/usr/bin/
+        $(INSTALL) -m 0755 $(@D)/finder-test.sh $(TARGET_DIR)/usr/bin/
 	$(INSTALL) -m 0755 $(@D)/assignment-autotest/test/assignment4/* $(TARGET_DIR)/bin
 endef
+
+AESD_ASSIGNMENTS_DEPENDENCIES = busybox
 
 $(eval $(generic-package))
 
