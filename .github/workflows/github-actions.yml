@@ -14,16 +14,9 @@ jobs:
           - uses: actions/checkout@v2
           - name: Checkout submodules
             run: git submodule update --init --recursive
-          - name: Manually Add Include Path
-            run: |
-              export C_INCLUDE_PATH=$GITHUB_WORKSPACE/buildroot/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include
-              export CPLUS_INCLUDE_PATH=$C_INCLUDE_PATH
-              export GCC_INCLUDE_DIRS=$C_INCLUDE_PATH
-              export FORCE_UNSAFE_CONFIGURE=1
-              make -C $GITHUB_WORKSPACE/buildroot
           - name: Verify limits.h in Github
             run: |
-              find/_w/assignment-4-beaspin/assignment-4-beaspin/buildroot/output/host -name limits.h
+              find $GITHUB_WORKSPACE/buildroot/output/host -name limits.h
           - uses: webfactory/ssh-agent@v0.5.3
             with:
                 ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
