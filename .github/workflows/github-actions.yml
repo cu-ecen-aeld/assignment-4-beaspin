@@ -16,7 +16,8 @@ jobs:
             run: git submodule update --init --recursive
           - name: Manually Add Include Path
             run: |
-              export C_INCLUDE_PATH=/_w/assignment-4-beaspin/assignment-4-beaspin/buildroot/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include
+              cd $GITHUB_WORKSPACE/buildroot
+              export C_INCLUDE_PATH=$GITHUB_WORKSPACE/buildroot/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include
               export CPLUS_INCLUDE_PATH=$C_INCLUDE_PATH
               export GCC_INCLUDE_DIRS=$C_INCLUDE_PATH
               make
