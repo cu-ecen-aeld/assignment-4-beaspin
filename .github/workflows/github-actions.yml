@@ -16,11 +16,11 @@ jobs:
             run: git submodule update --init --recursive
           - name: Manually Add Include Path
             run: |
-              cd $GITHUB_WORKSPACE/buildroot
               export C_INCLUDE_PATH=$GITHUB_WORKSPACE/buildroot/output/host/aarch64-buildroot-linux-gnu/sysroot/usr/include
               export CPLUS_INCLUDE_PATH=$C_INCLUDE_PATH
               export GCC_INCLUDE_DIRS=$C_INCLUDE_PATH
-              make
+              export FORCE_UNSAFE_CONFIGURE=1
+              make -C $GITHUB_WORKSPACE/buildroot
           - name: Verify limits.h in Github
             run: |
               find/_w/assignment-4-beaspin/assignment-4-beaspin/buildroot/output/host -name limits.h
