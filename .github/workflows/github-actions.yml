@@ -27,7 +27,10 @@ jobs:
           - name: Run full test
             env:
               GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
-            run: ./full-test.sh
+            run: |
+              export SKIP_BUILD=1
+              export DO_VALIDATE=1
+              ./full-test.sh
           - name: Cleanup
             if: always()
             run: |
