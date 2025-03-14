@@ -9,7 +9,7 @@ jobs:
     full-test:
         container: cuaesd/aesd-autotest:24-assignment4-buildroot
         runs-on: self-hosted
-        timeout-minutes: 120
+        timeout-minutes: 240
         steps:
           - uses: actions/checkout@v2
           - name: Checkout submodules
@@ -27,10 +27,7 @@ jobs:
           - name: Run full test
             env:
               GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
-            run: |
-              export SKIP_BUILD=1
-              export DO_VALIDATE=1
-              ./full-test.sh
+            run: ./full-test.sh
           - name: Cleanup
             if: always()
             run: |
