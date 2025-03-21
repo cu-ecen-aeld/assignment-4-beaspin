@@ -16,7 +16,7 @@ jobs:
             run: git submodule update --init --recursive
           - uses: webfactory/ssh-agent@v0.5.3
             with:
-               ssh-pubblic-key: ${{ secrets.SSH_PUBBLIC_KEY }}
+               ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
           - name: Set FORCE_UNSAFE_CONFIGURE
             run: |
               export FORCE_UNSAFE_CONFIGURE=1
